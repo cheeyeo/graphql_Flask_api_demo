@@ -1,0 +1,36 @@
+services:
+  pg:
+    image: postgres
+    env_file: .env
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+    volumes:
+      - graphqltutsdata:/var/lib/postgresql/data
+      - ./init/role.sh:/docker-entrypoint-initdb.d/init-database.sh
+  web:
+    build:
+      context: .
+      dockerfile: 'api/Dockerfile'
+      target: base
+    env_file: .env
+    restart: always
+    links:
+      - pg:pg
+    stop_signal: SIGINT
+    ports:
+      - '8000:8000'
+    depends_on:
+      pg:
+        condition: service_healthy
+    volumes:
+      - ./api:/api
+    environment:
+      FLASK_DEBUG: 1
+
+volumes:
+  graphqltutsdata:
