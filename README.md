@@ -21,6 +21,8 @@ docker compose -f compose.yaml up
 
 To create some seed data:
 ```
+source .env
+
 python seed_db.py
 ```
 
@@ -38,16 +40,16 @@ Navigate to browser to **http://localhost:8000/graphql**
 
 #### TODO:
 
-* Add 
+* Use inputs in the schema and update the mutations
 
-The current queries are made via the graphql query editor.
+* The current queries are made via the graphql query editor.
 
 How to make query via curl??
 
 ```
 curl http://localhost:8080/ \
-  -F operations='{ "query":"mutation ($userid: String!, $file: Upload!) { uploadUserAvatar(userid: $userid, file: $file) }","variables": { "file": null, "userid": null } }' \
-  -F map='{ "0": ["variables.file"], "1": ["variables.userid"] }' \
-  -F 0=@etiqueta_LG.jpeg \
-  -F 1=abc1234
-```
+-F operations='{ "query":"mutation ($userid: String!, $file: Upload!) { uploadUserAvatar(userid: $userid, file: $file) }","variables": { "file": null, "userid": null } }' \
+-F map='{ "0": ["variables.file"], "1": ["variables.userid"] }' \
+-F 0=@etiqueta_LG.jpeg \
+-F 1=abc1234
+```*
