@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from api.database import Post, DB
 
 
-def create_post_resolver(object, info, title, description):
+def create_post_resolver(object, info, input: dict):
     engine = create_engine(
         os.getenv('DB_URI'),
         echo=True
@@ -14,11 +14,10 @@ def create_post_resolver(object, info, title, description):
 
     with Session(engine) as session:
         try:
-            today = datetime.now()
             post = Post(
-                title=title,
-                description=description,
-                created_at=today,
+                title=input['title'],
+                description=input['description'],
+                created_at=datetime.now(),
             )
             session.add(post)
             session.commit()
@@ -35,7 +34,7 @@ def create_post_resolver(object, info, title, description):
             }
     
 
-def update_post_resolver(object, info, id, title, description):
+def update_post_resolver(object, info, id, input: dict):
     engine = create_engine(
         os.getenv('DB_URI'),
         echo=True
@@ -50,8 +49,8 @@ def update_post_resolver(object, info, id, title, description):
 
             ret_post = session.scalars(stmt).one()
 
-            ret_post.title = title
-            ret_post.description = description
+            ret_post.title = input['title']
+            ret_post.description = input['description']
             session.add(ret_post)
             session.commit()
 

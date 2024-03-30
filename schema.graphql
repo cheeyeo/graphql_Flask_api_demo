@@ -28,8 +28,13 @@ type Query {
     hello: String!
 }
 
+input PostInput {
+    title: String!
+    description: String!
+}
+
 type Mutation {
-    createPost(title: String!, description: String!, created_at: String): PostResult!
-    updatePost(id: ID!, title: String, description: String): PostResult!
+    createPost(input: PostInput!): PostResult!
+    updatePost(id: ID!, input: PostInput!): PostResult!
     deletePost(id: ID!): PostResult!
 }

@@ -17,6 +17,10 @@ services:
       context: .
       dockerfile: 'api/Dockerfile'
       target: base
+    develop:
+      watch:
+        - action: rebuild
+          path: schema.graphql
     env_file: .env
     restart: always
     links:
