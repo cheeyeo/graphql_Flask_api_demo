@@ -4,6 +4,7 @@
 [Python graphql tutorial]: https://www.apollographql.com/blog/complete-api-guide
 [Resolvers]: https://ariadnegraphql.org/docs/resolvers
 [Flask integration]: https://ariadnegraphql.org/docs/flask-integration
+[Flask middleware]: https://www.loginradius.com/blog/engineering/guest-post/securing-flask-api-with-jwt/
 
 
 A simple GraphQL API application built using **ariadne** and **Flask**. This is based on the original [Python graphql tutorial]
